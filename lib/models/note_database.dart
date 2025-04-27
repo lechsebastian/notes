@@ -15,11 +15,11 @@ class NoteDatabase extends ChangeNotifier {
   final List<Note> currentNotes = [];
 
   // C R E A T E
-  Future<void> createNote(String titleFromuser, String contentFromuser) async {
+  Future<void> createNote(String titleFromuser, String contentFromUser) async {
     final newNote =
         Note()
           ..title = titleFromuser
-          ..content = contentFromuser
+          ..content = contentFromUser
           ..createdAt = DateTime.now()
           ..updatedAt = DateTime.now();
 
@@ -37,15 +37,15 @@ class NoteDatabase extends ChangeNotifier {
   }
 
   // U P D A T E
-  Future<void> updateNote(
-    int id,
-    String titleFromuser,
-    String contentFromuser,
-  ) async {
+  Future<void> updateNote({
+    required int id,
+    required String titleFromUser,
+    required String contentFromUser,
+  }) async {
     final existingNote = await isar.notes.get(id);
     if (existingNote != null) {
-      existingNote.title = titleFromuser;
-      existingNote.content = contentFromuser;
+      existingNote.title = titleFromUser;
+      existingNote.content = contentFromUser;
       existingNote.updatedAt = DateTime.now();
       await isar.writeTxn(() => isar.notes.put(existingNote));
 
