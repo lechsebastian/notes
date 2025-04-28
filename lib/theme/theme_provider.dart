@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:notes/theme/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:notes/theme/theme.dart';
 
 class ThemeProvider extends ChangeNotifier {
   ThemeData _themeData = lightMode;
@@ -26,13 +26,18 @@ class ThemeProvider extends ChangeNotifier {
     prefs.setBool('isDarkMode', isOn);
   }
 
-  // Funkcja ładująca zapisane ustawienie motywu
   Future<void> _loadTheme() async {
     final prefs = await SharedPreferences.getInstance();
-    final isDark =
-        prefs.getBool('isDarkMode') ??
-        false; // Jeśli brak ustawienia, domyślnie Light
-    _themeData = isDark ? darkMode : lightMode;
+
+    if (prefs.containsKey('isDarkMode')) {
+      final isDark = prefs.getBool('isDarkMode') ?? false;
+      _themeData = isDark ? darkMode : lightMode;
+    } else {
+      final brightness =
+          WidgetsBinding.instance.platformDispatcher.platformBrightness;
+      final isDark = brightness == Brightness.dark;
+      _themeData = isDark ? darkMode : lightMode;
+    }
     notifyListeners();
   }
 }
