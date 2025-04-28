@@ -37,11 +37,10 @@ class _SettingsPageState extends State<SettingsPage> {
             CupertinoSwitch(
               value: Provider.of<ThemeProvider>(context).isDarkMode,
               onChanged:
-                  (value) =>
-                      Provider.of<ThemeProvider>(
-                        context,
-                        listen: false,
-                      ).toggleTheme(),
+                  (value) => Provider.of<ThemeProvider>(
+                    context,
+                    listen: false,
+                  ).toggleTheme(value),
             ),
           ],
         ),
