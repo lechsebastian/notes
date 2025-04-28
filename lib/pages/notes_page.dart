@@ -73,16 +73,22 @@ class _NotesPageState extends State<NotesPage> {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: currentNotes.length,
-              itemBuilder: (context, index) {
-                final note = currentNotes[index];
-                return MyNoteTile(
-                  note: note,
-                  onUpdatePress: () => updateNote(note),
-                  onDeletePress: () => noteDataBase.deleteNote(note.id),
-                );
+            child: RefreshIndicator(
+              onRefresh: () async {
+                await context.read<NoteDatabase>().readNotes();
+                setState(() {});
               },
+              child: ListView.builder(
+                itemCount: currentNotes.length,
+                itemBuilder: (context, index) {
+                  final note = currentNotes[index];
+                  return MyNoteTile(
+                    note: note,
+                    onUpdatePress: () => updateNote(note),
+                    onDeletePress: () => noteDataBase.deleteNote(note.id),
+                  );
+                },
+              ),
             ),
           ),
         ],
