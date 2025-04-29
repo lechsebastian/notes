@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:notes/components/note_settings.dart';
 import 'package:notes/models/note.dart';
 import 'package:popover/popover.dart';
+import 'package:intl/intl.dart';
 
 class MyNoteTile extends StatelessWidget {
   final Note note;
@@ -31,11 +32,26 @@ class MyNoteTile extends StatelessWidget {
           minFontSize: 14,
           overflow: TextOverflow.ellipsis,
         ),
-        subtitle: AutoSizeText(
-          note.content,
-          maxLines: 3,
-          minFontSize: 12,
-          overflow: TextOverflow.ellipsis,
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AutoSizeText(
+              note.content,
+              maxLines: 2,
+              minFontSize: 12,
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'Updated: ${_formatDate(note.updatedAt)}',
+              style: TextStyle(
+                fontSize: 10,
+                color: Theme.of(
+                  context,
+                ).colorScheme.onPrimary.withValues(alpha: 0.5),
+              ),
+            ),
+          ],
         ),
         trailing: Builder(
           builder: (context) {
@@ -59,4 +75,8 @@ class MyNoteTile extends StatelessWidget {
       ),
     );
   }
+}
+
+String _formatDate(DateTime date) {
+  return DateFormat('dd.MM.yyyy, HH:mm').format(date);
 }
