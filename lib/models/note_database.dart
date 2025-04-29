@@ -30,7 +30,8 @@ class NoteDatabase extends ChangeNotifier {
 
   // R E A D
   Future<void> readNotes() async {
-    List<Note> readNotes = await isar.notes.where().findAll();
+    List<Note> readNotes =
+        await isar.notes.where().sortByUpdatedAtDesc().findAll();
     currentNotes.clear();
     currentNotes.addAll(readNotes);
     notifyListeners();
