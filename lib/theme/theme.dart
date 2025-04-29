@@ -14,6 +14,7 @@ ThemeData lightMode = ThemeData(
     textColor: Colors.grey.shade800,
     iconColor: Colors.grey.shade800,
   ),
+  dividerColor: Colors.grey.shade300,
 );
 
 ThemeData darkMode = ThemeData(
@@ -30,4 +31,5 @@ ThemeData darkMode = ThemeData(
     textColor: Colors.grey.shade300,
     iconColor: Colors.grey.shade300,
   ),
+  dividerColor: Colors.grey.shade900,
 );
